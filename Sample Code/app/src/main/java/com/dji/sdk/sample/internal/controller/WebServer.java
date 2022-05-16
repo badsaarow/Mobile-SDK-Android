@@ -29,18 +29,13 @@ public class WebServer extends NanoHTTPD {
 
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
-        sb.append("<head><title>Debug Server</title></head>");
+        sb.append("<head><title>Drone Remote Server</title></head>");
         sb.append("<body>");
-        sb.append("<h1>Debug Server</h1>");
-
+        sb.append("<h1>Drone Remote Server</h1>");
         sb.append("<p><blockquote><b>URI</b> = ").append(String.valueOf(session.getUri())).append("<br />");
-
         sb.append("<b>Method</b> = ").append(String.valueOf(session.getMethod())).append("</blockquote></p>");
-
         sb.append("<h3>Headers</h3><p><blockquote>").append(toString(session.getHeaders())).append("</blockquote></p>");
-
         sb.append("<h3>Parms</h3><p><blockquote>").append(toString(session.getParms())).append("</blockquote></p>");
-
         sb.append("<h3>Parms (multi values?)</h3><p><blockquote>").append(toString(decodedQueryParameters)).append("</blockquote></p>");
 
         try {
@@ -53,7 +48,14 @@ public class WebServer extends NanoHTTPD {
 
         sb.append("</body>");
         sb.append("</html>");
+
+        String cmd = session.getUri();
+        this.passCommand(cmd);
         return newFixedLengthResponse(sb.toString());
+    }
+
+    private void passCommand(String cmd) {
+        Log.i("WebServer", "passCommand " + cmd);
     }
 
     private String toString(Map<String, ? extends Object> map) {
