@@ -30,6 +30,15 @@ public class WebServer extends NanoHTTPD {
     public Response serve(IHTTPSession session) {
         Map<String, List<String>> decodedQueryParameters = decodeParameters(session.getQueryParameterString());
 
+        if (session.getUri().startsWith("/cmd")) {
+            String cmd = session.getUri();
+            // /cmd?lpx=5lpy=5&rpx=5&rpy=5
+            Log.i("WebServer", toString(session.getParms()) + toString(decodedQueryParameters));
+            this.passCommand(cmd);
+            return newFixedLengthResponse(Response.Status.OK, MIME_PLAINTEXT, "OK");
+        }
+
+
         StringBuilder sb = new StringBuilder();
         sb.append("<html>");
         sb.append("<head><title>Drone Remote Server</title></head>");
@@ -52,8 +61,6 @@ public class WebServer extends NanoHTTPD {
         sb.append("</body>");
         sb.append("</html>");
 
-        String cmd = session.getUri();
-        this.passCommand(cmd);
         return newFixedLengthResponse(sb.toString());
     }
 

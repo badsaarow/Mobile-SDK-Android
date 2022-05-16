@@ -411,7 +411,7 @@ public class VirtualStickView extends RelativeLayout
     @Subscribe
     public void onWebControlEvent(WebControlEvent event) {
         Log.i("VirtualStick", "onWebControlEvent " + event.getCommand());
-        //m?lpx=5lpy=5&rpx=5&rpy=5
+        // /cmd?lpx=5lpy=5&rpx=5&rpy=5
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
