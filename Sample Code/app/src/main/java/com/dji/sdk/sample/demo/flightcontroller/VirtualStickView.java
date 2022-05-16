@@ -1,5 +1,7 @@
 package com.dji.sdk.sample.demo.flightcontroller;
 
+import static com.google.android.gms.internal.zzahn.runOnUiThread;
+
 import android.app.Service;
 import android.content.Context;
 import android.util.Log;
@@ -409,7 +411,14 @@ public class VirtualStickView extends RelativeLayout
     @Subscribe
     public void onWebControlEvent(WebControlEvent event) {
         Log.i("VirtualStick", "onWebControlEvent " + event.getCommand());
-        this.handleLeftStick(1.0f, 1.0f);
+        //m?lpx=5lpy=5&rpx=5&rpy=5
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handleLeftStick(0.5f, 0.5f);
+                handleRightStick(0.5f, 0.5f);
+            }
+        });
     }
 
     public void handleLeftStick(float pX, float pY) {
@@ -437,6 +446,27 @@ public class VirtualStickView extends RelativeLayout
             sendVirtualStickDataTask = new SendVirtualStickDataTask();
             sendVirtualStickDataTimer = new Timer();
             sendVirtualStickDataTimer.schedule(sendVirtualStickDataTask, 100, 200);
+        }
+    }
+
+    public void handleRightStick(float pX, float pY) {
+        if (Math.abs(pX) < 0.02) {
+            pX = 0;
+        }
+
+        if (Math.abs(pY) < 0.02) {
+            pY = 0;
+        }
+        float verticalJoyControlMaxSpeed = 2;
+        float yawJoyControlMaxSpeed = 20;
+
+        yaw = yawJoyControlMaxSpeed * pX;
+        throttle = verticalJoyControlMaxSpeed * pY;
+
+        if (null == sendVirtualStickDataTimer) {
+            sendVirtualStickDataTask = new SendVirtualStickDataTask();
+            sendVirtualStickDataTimer = new Timer();
+            sendVirtualStickDataTimer.schedule(sendVirtualStickDataTask, 0, 200);
         }
     }
 

@@ -58,6 +58,7 @@
 
     <!--Make this default focus so edittext won't be the focus-->
     <TextView
+        android:visibility="gone"
         android:id="@+id/text_model_available"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,6 +98,7 @@
         android:textSize="15sp" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/text_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

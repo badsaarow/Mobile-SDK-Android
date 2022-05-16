@@ -60,41 +60,10 @@ public class WebServer extends NanoHTTPD {
     private void passCommand(String cmd) {
         Log.i("WebServer", "passCommand " + cmd);
 
+        //should call every 100ms
+        //m?lpx=5lpy=5&rpx=5&rpy=5
         DJISampleApplication.getEventBus().post(new VirtualStickView.WebControlEvent(cmd));
 
-//        switch (cmd) {
-//            case "xp":
-//                Log.i("WebServer", cmd);
-//                //TODO: send virtualStickView
-//                // screenJoystickLeft.setJoystickListener > onTouch
-//                // call pushTouchEvent?
-//
-//                break;
-//            case "xn":
-//                Log.i("WebServer", cmd);
-//                break;
-//            case "yp":
-//                Log.i("WebServer", cmd);
-//                break;
-//            case "yn":
-//                Log.i("WebServer", cmd);
-//                break;
-//            case "zp":
-//                Log.i("WebServer", cmd);
-//                break;
-//            case "zn":
-//                Log.i("WebServer", cmd);
-//                break;
-//            case "ap":
-//                Log.i("WebServer", cmd);
-//                break;
-//            case "an":
-//                Log.i("WebServer", cmd);
-//                break;
-//            default:
-//                Log.w("WebServer", "unknown " + cmd);
-//                break;
-//        }
     }
 
     private String toString(Map<String, ? extends Object> map) {

@@ -103,7 +103,6 @@ public class ViewHelper {
         if (null == bytes) {
             return "";
         }
-        // 去除NULL字符
         byte zero = 0x00;
         byte no = (byte)0xFF;
         for (int i = 0; i < bytes.length; i++) {
@@ -139,7 +138,7 @@ public class ViewHelper {
         if (null == bytes || bytes.length == 0) {
             return "";
         }
-        // 去除NULL字符
+
         byte zero = 0x00;
         for (int i = start; i < length && i < bytes.length; i++) {
             if (bytes[i] == zero) {
@@ -181,8 +180,6 @@ public class ViewHelper {
         return (short) (0xff & b);
     }
 
-
-
     public static void addView(View parent, int layoutId) {
         addView(parent, layoutId, parent.getContext());
     }
@@ -209,8 +206,6 @@ public class ViewHelper {
 
         child.removeAllViews();
         parent.setOrientation(child.getOrientation());
-
-        //addGravity(parent, child);
 
         for(int i = 0; i < count; i++) {
             parent.addView(views.get(i), params.get(i));

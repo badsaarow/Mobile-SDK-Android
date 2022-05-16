@@ -4,6 +4,7 @@
        android:layout_height="match_parent">
 
     <TextView
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,6 +40,7 @@
 
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_vertical_control_mode"
         android:layout_below="@+id/btn_horizontal_coordinate"
         android:layout_height="48dp"
@@ -47,6 +49,7 @@
         style="@style/common_button"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_yaw_control_mode"
         android:layout_below="@id/btn_vertical_control_mode"
         android:layout_height="48dp"
@@ -54,6 +57,7 @@
         style="@style/common_button"/>
 
     <Button
+        android:visibility="gone"
         android:id="@+id/btn_roll_pitch_control_mode"
         android:layout_below="@id/btn_yaw_control_mode"
         android:layout_height="48dp"
@@ -61,6 +65,7 @@
         style="@style/common_button"/>
 
     <ToggleButton
+        android:visibility="gone"
         android:id="@+id/btn_start_simulator"
         android:layout_height="48dp"
         android:layout_below="@+id/btn_roll_pitch_control_mode"

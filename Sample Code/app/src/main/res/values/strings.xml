@@ -25,8 +25,8 @@
     <string name="component_listview_flight_controller">Flight Controller</string>
     <string name="component_listview_battery">Battery</string>
     <string name="component_listview_airlink">Air Link</string>
-    <string name="component_listview_remote_controller">Remote Controller</string>
-    <string name="component_listview_mobile_remote_controller">Mobile Remote Controller</string>
+    <string name="component_listview_remote_controller">Remote Auto Controller</string>
+    <string name="component_listview_mobile_remote_controller">Remote Auto Controller</string>
     <string name="component_listview_mission_manager">Mission Manager (Deprecated)</string>
     <string name="component_listview_timeline_mission_control">Timeline Mission Control</string>
     <string name="component_listview_bluetooth">Bluetooth</string>
@@ -104,8 +104,8 @@
     <string name="flight_controller_listview_flight_limitation">Flight Limitation</string>
     <string name="flight_controller_subtitle_orientation_mode">Orientation Mode</string>
     <string name="flight_controller_listview_orientation_mode">Orientation Mode</string>
-    <string name="flight_controller_subtitle_virtual_stick">Virtual Stick</string>
-    <string name="flight_controller_listview_virtual_stick">Virtual Stick</string>
+    <string name="flight_controller_subtitle_virtual_stick">Remote Stick Control</string>
+    <string name="flight_controller_listview_virtual_stick">Remote Stick Control</string>
     <string name="flight_controller_subtitle_intelligent_flight_assistant">Intelligent Flight Assistant</string>
     <string name="flight_controller_listview_intelligent_flight_assistant">Intelligent Flight Assistant</string>
     <string name="flight_controller_listview_networkRTK">Network RTK</string>
@@ -240,8 +240,8 @@
     <string name="search_for_demo">Search</string>
     <string name="not_support_mediadownload">not support media download</string>
     <string name="status_no_product_connected">Status: No Product Connected</string>
-    <string name="register_app">Register APP</string>
-    <string name="open">Open</string>
+    <string name="register_app">Register to DJI Server</string>
+    <string name="open">Start</string>
 
 
 </resources>

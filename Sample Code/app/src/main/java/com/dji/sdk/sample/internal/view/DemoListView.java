@@ -57,37 +57,29 @@ public class DemoListView extends FrameLayout {
         // Build model for ListView
         ListItem.ListBuilder builder = new ListItem.ListBuilder();
 
-        builder.addGroup(R.string.component_listview_sdk_4_1,
+        builder.addGroup(R.string.component_listview_flight_controller,
                 false,
+                new GroupItem(R.string.flight_controller_listview_virtual_stick, VirtualStickView.class),
+                new GroupItem(R.string.component_listview_mobile_remote_controller,
+                        MobileRemoteControllerView.class),
+                new GroupItem(R.string.flight_controller_listview_compass_calibration,
+                        CompassCalibrationView.class),
+                new GroupItem(R.string.flight_controller_listview_flight_limitation,
+                        FlightLimitationView.class),
+                new GroupItem(R.string.flight_controller_listview_orientation_mode, OrientationModeView.class),
+                new GroupItem(R.string.flight_controller_listview_intelligent_flight_assistant,
+                        FlightAssistantPushDataView.class),
+                new GroupItem(R.string.flight_controller_listview_networkRTK, NetworkRTKView.class),
+                new GroupItem(R.string.remote_controller_listview_push_info,
+                        PushRemoteControllerDataView.class),
                 new GroupItem(R.string.component_listview_app_activation,
                         AppActivationView.class));
-
-
 
         builder.addGroup(R.string.component_listview_battery,
                 false,
                 new GroupItem(R.string.battery_listview_push_info, PushBatteryDataView.class),
                 new GroupItem(R.string.battery_listview_set_get_discharge_day, SetGetDischargeDayView.class));
 
-
-        builder.addGroup(R.string.component_listview_flight_controller,
-                false,
-                new GroupItem(R.string.flight_controller_listview_compass_calibration,
-                        CompassCalibrationView.class),
-                new GroupItem(R.string.flight_controller_listview_flight_limitation,
-                        FlightLimitationView.class),
-                new GroupItem(R.string.flight_controller_listview_orientation_mode, OrientationModeView.class),
-                new GroupItem(R.string.flight_controller_listview_virtual_stick, VirtualStickView.class),
-                new GroupItem(R.string.flight_controller_listview_intelligent_flight_assistant,
-                        FlightAssistantPushDataView.class),
-                new GroupItem(R.string.flight_controller_listview_networkRTK, NetworkRTKView.class));
-
-        builder.addGroup(R.string.component_listview_remote_controller,
-                false,
-                new GroupItem(R.string.remote_controller_listview_push_info,
-                        PushRemoteControllerDataView.class),
-                new GroupItem(R.string.component_listview_mobile_remote_controller,
-                        MobileRemoteControllerView.class));
 
         // Set-up ExpandableListView
         expandableListView = (ExpandableListView) view.findViewById(R.id.expandable_list);
