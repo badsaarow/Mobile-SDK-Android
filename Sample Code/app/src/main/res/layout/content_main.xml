@@ -21,10 +21,22 @@
         android:visibility="invisible" />
 
     <TextView
-        android:id="@+id/text_connection_status"
+        android:id="@+id/text_webserver_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/progress_bar"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="Check your WiFi!"
+        android:textColor="@color/place_autocomplete_prediction_primary_text_highlight"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/text_connection_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_webserver_info"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/status_no_product_connected"

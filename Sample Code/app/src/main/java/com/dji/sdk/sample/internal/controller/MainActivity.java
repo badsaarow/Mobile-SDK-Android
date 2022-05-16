@@ -34,6 +34,8 @@ import com.dji.sdk.sample.internal.view.DemoListView;
 import com.dji.sdk.sample.internal.view.PresentableView;
 import com.squareup.otto.Subscribe;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.InetAddress;
@@ -55,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Stack<ViewWrapper> stack;
     private TextView titleTextView;
+    private TextView httpAddress;
     private SearchView searchView;
     private MenuItem searchViewItem;
     private MenuItem hintItem;
+    private WebServer androidWebServer;
 
     //region Life-cycle
     @Override
@@ -67,13 +71,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupActionBar();
         contentFrameLayout = (FrameLayout) findViewById(R.id.framelayout_content);
+        titleTextView = (TextView) findViewById(R.id.text_webserver_info);
         initParams();
 
         String wifiAddress = this.wifiIpAddress(this);
         Log.i("IP: ", wifiAddress);
-        WebServer androidWebServer = new WebServer(wifiAddress, 8888);
+        androidWebServer = new WebServer(wifiAddress, 8888);
         try {
             androidWebServer.start();
+            titleTextView.setText("http://" + wifiAddress + ":8888/");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         DJISampleApplication.getEventBus().unregister(this);
+        androidWebServer.stop();
         super.onDestroy();
     }
 
