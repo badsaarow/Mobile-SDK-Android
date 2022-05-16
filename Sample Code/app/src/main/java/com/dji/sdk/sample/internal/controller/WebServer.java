@@ -2,6 +2,8 @@ package com.dji.sdk.sample.internal.controller;
 
 import android.util.Log;
 
+import com.dji.sdk.sample.demo.flightcontroller.VirtualStickView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +18,7 @@ public class WebServer extends NanoHTTPD {
 
     public WebServer(String hostname, int port) {
         super(hostname, port);
+        DJISampleApplication.getEventBus().register(this);
         Log.i("WebServer", "Start WebServer " + hostname + ":" + port);
     }
 
@@ -56,6 +59,42 @@ public class WebServer extends NanoHTTPD {
 
     private void passCommand(String cmd) {
         Log.i("WebServer", "passCommand " + cmd);
+
+        DJISampleApplication.getEventBus().post(new VirtualStickView.WebControlEvent(cmd));
+
+//        switch (cmd) {
+//            case "xp":
+//                Log.i("WebServer", cmd);
+//                //TODO: send virtualStickView
+//                // screenJoystickLeft.setJoystickListener > onTouch
+//                // call pushTouchEvent?
+//
+//                break;
+//            case "xn":
+//                Log.i("WebServer", cmd);
+//                break;
+//            case "yp":
+//                Log.i("WebServer", cmd);
+//                break;
+//            case "yn":
+//                Log.i("WebServer", cmd);
+//                break;
+//            case "zp":
+//                Log.i("WebServer", cmd);
+//                break;
+//            case "zn":
+//                Log.i("WebServer", cmd);
+//                break;
+//            case "ap":
+//                Log.i("WebServer", cmd);
+//                break;
+//            case "an":
+//                Log.i("WebServer", cmd);
+//                break;
+//            default:
+//                Log.w("WebServer", "unknown " + cmd);
+//                break;
+//        }
     }
 
     private String toString(Map<String, ? extends Object> map) {

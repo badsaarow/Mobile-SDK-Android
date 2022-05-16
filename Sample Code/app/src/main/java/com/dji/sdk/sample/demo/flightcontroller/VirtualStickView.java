@@ -2,6 +2,7 @@ package com.dji.sdk.sample.demo.flightcontroller;
 
 import android.app.Service;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +16,13 @@ import androidx.annotation.NonNull;
 import com.dji.sdk.sample.R;
 import com.dji.sdk.sample.internal.OnScreenJoystickListener;
 import com.dji.sdk.sample.internal.controller.DJISampleApplication;
+import com.dji.sdk.sample.internal.model.ViewWrapper;
 import com.dji.sdk.sample.internal.utils.DialogUtils;
 import com.dji.sdk.sample.internal.utils.ModuleVerificationUtil;
 import com.dji.sdk.sample.internal.utils.OnScreenJoystick;
 import com.dji.sdk.sample.internal.utils.ToastUtils;
 import com.dji.sdk.sample.internal.view.PresentableView;
+import com.squareup.otto.Subscribe;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,8 +41,6 @@ import dji.keysdk.FlightControllerKey;
 import dji.keysdk.KeyManager;
 import dji.sdk.flightcontroller.FlightController;
 import dji.sdk.flightcontroller.Simulator;
-
-//TODO: Refactor needed
 
 /**
  * Class for virtual stick.
@@ -90,10 +91,12 @@ public class VirtualStickView extends RelativeLayout
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         setUpListeners();
+        DJISampleApplication.getEventBus().register(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
+        DJISampleApplication.getEventBus().unregister(this);
         if (null != sendVirtualStickDataTimer) {
             if (sendVirtualStickDataTask != null) {
                 sendVirtualStickDataTask.cancel();
@@ -400,6 +403,52 @@ public class VirtualStickView extends RelativeLayout
                                     }
                                 });
             }
+        }
+    }
+
+    @Subscribe
+    public void onWebControlEvent(WebControlEvent event) {
+        Log.i("VirtualStick", "onWebControlEvent " + event.getCommand());
+        this.handleLeftStick(1.0f, 1.0f);
+    }
+
+    public void handleLeftStick(float pX, float pY) {
+        if (Math.abs(pX) < 0.02) {
+            pX = 0;
+        }
+
+        if (Math.abs(pY) < 0.02) {
+            pY = 0;
+        }
+        float pitchJoyControlMaxSpeed = 10;
+        float rollJoyControlMaxSpeed = 10;
+
+        if (horizontalCoordinateFlag) {
+            if (rollPitchControlModeFlag) {
+                pitch = (float) (pitchJoyControlMaxSpeed * pX);
+                roll = (float) (rollJoyControlMaxSpeed * pY);
+            } else {
+                pitch = - (float) (pitchJoyControlMaxSpeed * pY);
+                roll = (float) (rollJoyControlMaxSpeed * pX);
+            }
+        }
+
+        if (null == sendVirtualStickDataTimer) {
+            sendVirtualStickDataTask = new SendVirtualStickDataTask();
+            sendVirtualStickDataTimer = new Timer();
+            sendVirtualStickDataTimer.schedule(sendVirtualStickDataTask, 100, 200);
+        }
+    }
+
+    public static class WebControlEvent {
+        private final String command;
+
+        public WebControlEvent(String command) {
+            this.command = command;
+        }
+
+        public String getCommand() {
+            return command;
         }
     }
 }

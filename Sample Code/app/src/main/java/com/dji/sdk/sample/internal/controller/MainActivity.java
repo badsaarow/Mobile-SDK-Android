@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupActionBar();
         contentFrameLayout = (FrameLayout) findViewById(R.id.framelayout_content);
-        titleTextView = (TextView) findViewById(R.id.text_webserver_info);
+        httpAddress = (TextView) findViewById(R.id.text_webserver_info);
         initParams();
 
         String wifiAddress = this.wifiIpAddress(this);
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         androidWebServer = new WebServer(wifiAddress, 8888);
         try {
             androidWebServer.start();
-            titleTextView.setText("http://" + wifiAddress + ":8888/");
+            httpAddress.setText("http://" + wifiAddress + ":8888/");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        DJISampleApplication.getEventBus().unregister(androidWebServer);
         DJISampleApplication.getEventBus().unregister(this);
         androidWebServer.stop();
         super.onDestroy();
