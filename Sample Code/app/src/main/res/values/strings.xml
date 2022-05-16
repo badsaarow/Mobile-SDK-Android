@@ -239,6 +239,9 @@
     <string name="component_listview_health_information">Device Health Information</string>
     <string name="search_for_demo">Search</string>
     <string name="not_support_mediadownload">not support media download</string>
+    <string name="status_no_product_connected">Status: No Product Connected</string>
+    <string name="register_app">Register APP</string>
+    <string name="open">Open</string>
 
 
 </resources>

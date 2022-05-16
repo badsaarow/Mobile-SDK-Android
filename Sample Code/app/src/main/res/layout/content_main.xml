@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.dji.sdk.sample.internal.view.MainContent xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:tools="http://schemas.android.com/tools"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="wrap_content"
-                                              android:layout_gravity="center"
-                                              android:clickable="true"
-                                              android:orientation="vertical"
-                                              tools:context=".internal.controller.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context=".internal.controller.MainActivity"
+    tools:visibility="visible">
 
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:visibility="gone"
         android:max="100"
-        android:progress="0" />
+        android:progress="0"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/text_connection_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_bar"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Status: No Product Connected"
+        android:text="@string/status_no_product_connected"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/text_product_info"
@@ -37,8 +41,8 @@
         android:gravity="center"
         android:text="@string/product_information"
         android:textColor="@android:color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <!--Make this default focus so edittext won't be the focus-->
     <TextView
@@ -47,12 +51,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_product_info"
         android:layout_centerHorizontal="true"
-        android:focusableInTouchMode="true"
         android:focusable="true"
+        android:focusableInTouchMode="true"
         android:gravity="center"
         android:text="@string/model_not_available"
         android:textColor="@color/gray"
-        android:textSize="15dp"/>
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/btn_registerApp"
@@ -62,23 +66,23 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:background="@drawable/round_btn"
-        android:text="Register APP"
+        android:text="@string/register_app"
         android:textAllCaps="false"
         android:textColor="@color/common_text_color"
-        android:textSize="15dp"/>
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/btn_open"
         android:layout_width="150dp"
         android:layout_height="55dp"
-        android:layout_below="@+id/btn_registerAppForLDM"
+        android:layout_below="@+id/btn_registerApp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:background="@drawable/round_btn"
-        android:text="Open"
+        android:text="@string/open"
         android:textAllCaps="false"
         android:textColor="@color/common_text_color"
-        android:textSize="15dp"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/text_version"
@@ -89,6 +93,6 @@
         android:layout_marginTop="15dp"
         android:text="@string/sdk_version"
         android:textColor="@color/gray"
-        android:textSize="15dp"/>
+        android:textSize="15sp" />
 
 </com.dji.sdk.sample.internal.view.MainContent>
