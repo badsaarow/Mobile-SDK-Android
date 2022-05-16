@@ -70,22 +70,6 @@
                 android:resource="@xml/accessory_filter"/>
         </activity>
 
-        <activity
-            android:name="com.dji.sdk.sample.demo.payload.PayloadActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="landscape"/>
-
-        <activity
-            android:name="com.dji.sdk.sample.demo.payload.PayloadSendGetDataActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="landscape"/>
-
-        <activity
-            android:name="com.dji.sdk.sample.demo.payload.PayloadWidgetActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".demo.utmiss.UTMISSActivity" />
     </application>
 
 </manifest>

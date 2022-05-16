@@ -26,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.dji.sdk.sample.R;
-import com.dji.sdk.sample.demo.bluetooth.BluetoothView;
 import com.dji.sdk.sample.internal.controller.DJISampleApplication;
 import com.dji.sdk.sample.internal.controller.MainActivity;
 import com.dji.sdk.sample.internal.model.ViewWrapper;
@@ -190,9 +189,6 @@ public class MainContent extends RelativeLayout {
                     ToastUtils.setResultToToast("pls wait the sdk initiation finished");
                     return;
                 }
-                bluetoothView =
-                    new ViewWrapper(new BluetoothView(getContext()), R.string.component_listview_bluetooth);
-                DJISampleApplication.getEventBus().post(bluetoothView);
             }
         });
         mBridgeModeEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
