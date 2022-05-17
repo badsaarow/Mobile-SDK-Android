@@ -1,0 +1,26 @@
+<html>
+<body>
+<div>
+<div class="left">
+<button id="lleft">⬅️</button>
+<button id="lright">➡️</button>
+<button id="lup" >⬆️</button>
+<button id="ldown">⬇️</button>
+</div>
+<div class="right">
+<button id="rleft">⬅️</button>
+<button id="rright">➡️</button>
+<button id="rup" >⬆️</button>
+<button id="rdown">⬇️</button>
+</div>
+</div>
+<script>
+const button = document.querySelector('button');
+button.addEventListener('click', event => {
+fetch('/cmd?'+event)
+.then((response) => console.json())
+.then((data) => console.log(data));
+});
+</script>
+</body>
+</html>

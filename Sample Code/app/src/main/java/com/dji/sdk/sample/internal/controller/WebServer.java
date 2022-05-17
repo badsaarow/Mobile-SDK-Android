@@ -39,13 +39,79 @@ public class WebServer extends NanoHTTPD {
             String cmd = session.getUri();
             // /cmd?lpx=5lpy=5&rpx=5&rpy=5
             Log.i("WebServer", toString(session.getParms()) + toString(decodedQueryParameters));
-            this.passCommand(cmd);
-            return newFixedLengthResponse(Response.Status.OK, MIME_PLAINTEXT, "OK");
-        }
-
-        if (session.getUri() == "/") {
+            // Parms
+            // lpx = 5, lpy=5, rpx, rpy = 5
+            Map<String, String> param =  session.getParms();
+            this.passCommand(cmd, param);
+            //return newFixedLengthResponse(Response.Status.OK, MIME_PLAINTEXT, "OK");
+        } else  if (session.getUri().equals("/")) {
             StringBuilder sb = new StringBuilder();
             sb.append("<script>window.location.href = /status;</script>");
+            return newFixedLengthResponse(sb.toString());
+        } else if (session.getUri().equals("/control")) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("<html>");
+            sb.append("<body>");
+            sb.append("<div>");
+            sb.append("<div class=\"left\">");
+            sb.append("<button id=\"lleft\">LEFT</button>");
+            sb.append("<button id=\"lright\">RIGHT</button>");
+            sb.append("<button id=\"lup\">UP</button>");
+            sb.append("<button id=\"ldown\">DOWN</button>");
+            sb.append("</div>");
+            sb.append("<div class=\"right\">");
+            sb.append("<button id=\"rleft\">LEFT</button>");
+            sb.append("<button id=\"rright\">RIGHT</button>");
+            sb.append("<button id=\"rup\">UP</button>");
+            sb.append("<button id=\"rdown\">DOWN</button>");
+            sb.append("</div>");
+            sb.append("</div>");
+            sb.append("<a href=/status>Status</a>");
+            sb.append("<script>");
+            sb.append("document.getElementById('lleft').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=-5&lpy=0&rpx=0&rpy=0')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('lright').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=5&lpy=0&rpx=0&rpy=0')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('lup').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=0&lpy=5&rpx=0&rpy=0')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('ldown').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=0&lpy=-5&rpx=0&rpy=0')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('rleft').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=0&lpy=0&rpx=-5&rpy=0')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('rright').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=0&lpy=0&rpx=5&rpy=0')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('rup').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=0&lpy=0&rpx=0&rpy=5')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+            sb.append("document.getElementById('rdown').addEventListener('click', event => {");
+            sb.append("fetch('/cmd?lpx=0&lpy=0&rpx=0&rpy=-5')");
+            sb.append(".then((response) => console.log(response))");
+            sb.append(".then((data) => console.log(data));");
+            sb.append("});");
+
+            sb.append("</script>");
+            sb.append("</body>");
+            sb.append("</html>");
             return newFixedLengthResponse(sb.toString());
         }
 
@@ -67,7 +133,7 @@ public class WebServer extends NanoHTTPD {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        sb.append("<a href=/control>Controller</a>");
         sb.append("</body>");
         sb.append("</html>");
 
@@ -165,12 +231,18 @@ public class WebServer extends NanoHTTPD {
         return res;
     }
 
-    private void passCommand(String cmd) {
-        Log.i("WebServer", "passCommand " + cmd);
+    private void passCommand(String cmd, Map<String, String> param) {
+        Log.i("WebServer", "passCommand " + cmd + ", " + param.toString());
 
         //should call every 100ms
-        //m?lpx=5lpy=5&rpx=5&rpy=5
-        DJISampleApplication.getEventBus().post(new VirtualStickView.WebControlEvent(cmd));
+        //cmdm?lpx=5&lpy=5&rpx=5&rpy=5
+        Map<String, String> axParam = new HashMap<String, String>();
+        axParam.put("lpx", param.get("lpx").equals("0") ? "0": String.valueOf(Float.parseFloat(param.get("lpx")) / 10f));
+        axParam.put("lpy", param.get("lpy").equals("0") ? "0": String.valueOf(Float.parseFloat(param.get("lpy")) / 10f));
+        axParam.put("rpx", param.get("rpx").equals("0") ? "0": String.valueOf(Float.parseFloat(param.get("rpx")) / 10f));
+        axParam.put("rpy", param.get("rpy").equals("0") ? "0": String.valueOf(Float.parseFloat(param.get("rpy")) / 10f));
+
+        DJISampleApplication.getEventBus().post(new VirtualStickView.WebControlEvent(cmd, axParam));
 
     }
 

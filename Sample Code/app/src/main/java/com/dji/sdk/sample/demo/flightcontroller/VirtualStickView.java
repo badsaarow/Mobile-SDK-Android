@@ -1,5 +1,7 @@
 package com.dji.sdk.sample.demo.flightcontroller;
 
+import static dji.common.ProtobufHelper.toFloat;
+
 import android.app.Service;
 import android.content.Context;
 import android.util.Log;
@@ -16,7 +18,6 @@ import androidx.annotation.NonNull;
 import com.dji.sdk.sample.R;
 import com.dji.sdk.sample.internal.OnScreenJoystickListener;
 import com.dji.sdk.sample.internal.controller.DJISampleApplication;
-import com.dji.sdk.sample.internal.model.ViewWrapper;
 import com.dji.sdk.sample.internal.utils.DialogUtils;
 import com.dji.sdk.sample.internal.utils.ModuleVerificationUtil;
 import com.dji.sdk.sample.internal.utils.OnScreenJoystick;
@@ -24,6 +25,7 @@ import com.dji.sdk.sample.internal.utils.ToastUtils;
 import com.dji.sdk.sample.internal.view.PresentableView;
 import com.squareup.otto.Subscribe;
 
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -408,11 +410,11 @@ public class VirtualStickView extends RelativeLayout
 
     @Subscribe
     public void onWebControlEvent(WebControlEvent event) {
-        Log.i("VirtualStick", "onWebControlEvent " + event.getCommand());
-        // /cmd?lpx=5lpy=5&rpx=5&rpy=5
+        Log.i("VirtualStick", "onWebControlEvent " + event.getCommand() + ", " + event.getParam().toString());
+        // /cmd?lpy=5&rpx=5&rpy=5
 
-        handleLeftStick(0.5f, 0.5f);
-        handleRightStick(0.5f, 0.5f);
+        handleLeftStick(toFloat(event.getParam().get("lpx")), toFloat(event.getParam().get("lpy")));
+        handleRightStick(toFloat(event.getParam().get("rpx")), toFloat(event.getParam().get("rpy")));
     }
 
     public void handleLeftStick(float pX, float pY) {
@@ -465,14 +467,17 @@ public class VirtualStickView extends RelativeLayout
     }
 
     public static class WebControlEvent {
-        private final String command;
+        private String command;
+        private Map<String, String> param;
 
-        public WebControlEvent(String command) {
+        public WebControlEvent(String command, Map param) {
             this.command = command;
+            this.param = param;
         }
 
         public String getCommand() {
             return command;
         }
+        public Map<String, String> getParam() { return param; }
     }
 }
