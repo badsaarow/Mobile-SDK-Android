@@ -1,7 +1,5 @@
 package com.dji.sdk.sample.demo.flightcontroller;
 
-import static com.google.android.gms.internal.zzahn.runOnUiThread;
-
 import android.app.Service;
 import android.content.Context;
 import android.util.Log;
@@ -412,13 +410,9 @@ public class VirtualStickView extends RelativeLayout
     public void onWebControlEvent(WebControlEvent event) {
         Log.i("VirtualStick", "onWebControlEvent " + event.getCommand());
         // /cmd?lpx=5lpy=5&rpx=5&rpy=5
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                handleLeftStick(0.5f, 0.5f);
-                handleRightStick(0.5f, 0.5f);
-            }
-        });
+
+        handleLeftStick(0.5f, 0.5f);
+        handleRightStick(0.5f, 0.5f);
     }
 
     public void handleLeftStick(float pX, float pY) {
